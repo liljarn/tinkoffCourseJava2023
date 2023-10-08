@@ -31,7 +31,6 @@ public class BrokenStringTest {
     @Test
     @DisplayName("Ввод нулево строки")
     public void fixString_shouldReturnException_whenInputNull() {
-        String brokenString = null;
-        assertThatThrownBy(()->fixString(brokenString)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(()->fixString(null)).isInstanceOf(NullPointerException.class);
     }
 }

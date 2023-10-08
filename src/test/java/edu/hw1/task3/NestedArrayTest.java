@@ -24,8 +24,7 @@ public class NestedArrayTest {
     @Test
     @DisplayName("Ввод пустого массива")
     public void isNested_shouldReturnException_whenNoInput() {
-        int[] nestedArray = null;
         int[] originArray = {};
-        assertThatThrownBy(()->isNested(nestedArray, originArray)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(()->isNested(null, originArray)).isInstanceOf(NullPointerException.class);
     }
 }

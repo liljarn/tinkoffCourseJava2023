@@ -25,9 +25,9 @@ public final class SpecialPalindrome {
         }
         int descendantNumber = 0;
         for (int i = 0; i < stringNumber.length() - 1; i += 2) {
-            descendantNumber = (int) (descendantNumber * DIGIT
+            descendantNumber = descendantNumber * DIGIT
                 + Character.getNumericValue(stringNumber.charAt(i))
-                + Character.getNumericValue(stringNumber.charAt(i + 1)));
+                + Character.getNumericValue(stringNumber.charAt(i + 1));
         }
         if (stringNumber.length() % 2 != 0) {
             descendantNumber =
