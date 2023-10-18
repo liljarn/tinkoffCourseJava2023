@@ -57,10 +57,6 @@ public class Session {
         return attempts;
     }
 
-    public void setAttempts(int attempts) {
-        this.attempts = attempts;
-    }
-
     public GameStatus getGameStatus() {
         return gameStatus;
     }
