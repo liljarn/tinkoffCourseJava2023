@@ -34,23 +34,23 @@ public class Session {
             }
             if (new String(userAnswer).equals(answer)) {
                 gameStatus = GameStatus.ENDED;
-                return new Win(userAnswer, attempts, maxAttempts);
+                return new Win(userAnswer, attempts, maxAttempts, answer);
             }
-            return new SuccessfulGuess(userAnswer, attempts, maxAttempts);
+            return new SuccessfulGuess(userAnswer, attempts, maxAttempts, answer);
         }
         attempts++;
         if (guess == CONCEDE_CHAR || attempts == maxAttempts) {
             return giveUp();
         }
-        return new FailedGuess(userAnswer, attempts, maxAttempts);
+        return new FailedGuess(userAnswer, attempts, maxAttempts, answer);
     }
 
     @NotNull GuessResult giveUp() {
         gameStatus = GameStatus.ENDED;
         if (attempts != maxAttempts) {
-            return new Concede(userAnswer, attempts, maxAttempts);
+            return new Concede(userAnswer, attempts, maxAttempts, answer);
         }
-        return new Defeat(userAnswer, attempts, maxAttempts);
+        return new Defeat(userAnswer, attempts, maxAttempts, answer);
     }
 
     public GameStatus getGameStatus() {

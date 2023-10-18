@@ -5,7 +5,7 @@ import java.util.Random;
 import org.jetbrains.annotations.NotNull;
 
 public class GameWords implements Dictionary {
-    private final static String[][] WORDS = {{"coke", "java"}, {"tokyo", "ghoul"}, {"league", "katana"}};
+    private final static String[][] WORDS = {{"cola", "java"}, {"tokyo", "ghoul"}, {"katana"}};
     private final int size;
     private static final int MINIMUM_WORD_LENGTH = 4;
 

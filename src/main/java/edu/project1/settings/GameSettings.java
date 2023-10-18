@@ -26,7 +26,6 @@ public class GameSettings {
                 maxAttempts = Difficulty.DEATH.getDifficulty();
                 break;
             default:
-                maxAttempts = Difficulty.MEDIUM.getDifficulty();
                 break;
         }
     }
@@ -43,7 +42,6 @@ public class GameSettings {
                 wordLength = WordLength.LONG.getLength();
                 break;
             default:
-                wordLength = WordLength.SHORT.getLength();
                 break;
         }
     }

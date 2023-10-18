@@ -6,4 +6,6 @@ sealed public interface GuessResult permits Defeat, Win, SuccessfulGuess, Failed
     @NotNull String message();
 
     char[] state();
+
+    String answer();
 }
