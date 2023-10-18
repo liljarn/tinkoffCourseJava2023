@@ -7,9 +7,9 @@ public class GameSettings {
     private final static int MEDIUM_DIFFICULTY = 2;
     private final static int HARD_DIFFICULTY = 3;
     private final static int DEATH_DIFFICULTY = 4;
-    private final static int SHORT_LENGTH = 4;
-    private final static int MEDIUM_LENGTH = 5;
-    private final static int LONG_LENGTH = 6;
+    private final static int SHORT_LENGTH = 1;
+    private final static int MEDIUM_LENGTH = 2;
+    private final static int LONG_LENGTH = 3;
 
     public void setGameDifficulty(int difficulty) {
         switch (difficulty) {

@@ -53,6 +53,14 @@ public class Session {
         return new Defeat(userAnswer, attempts, maxAttempts, answer);
     }
 
+    public int getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(int attempts) {
+        this.attempts = attempts;
+    }
+
     public GameStatus getGameStatus() {
         return gameStatus;
     }
