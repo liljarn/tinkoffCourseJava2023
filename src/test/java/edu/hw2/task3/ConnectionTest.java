@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class ConnectionTest {
     @Test
@@ -25,12 +26,10 @@ public class ConnectionTest {
         );
     }
 
-    @DisplayName("Тестирование подключения к серверу")
+    @DisplayName("Connecting to server test")
     @ParameterizedTest
     @MethodSource("remoteConnectionArguments")
     void remoteConnectionTest(ConnectionManager manager, int maxAttempts) {
-        // given
-        PopularCommandExecutor popularCommandExecutor = new PopularCommandExecutor(manager, maxAttempts);
-        popularCommandExecutor.updatePackages();
+        assertThatCode(() -> new PopularCommandExecutor(manager, maxAttempts).updatePackages()).doesNotThrowAnyException();
     }
 }
