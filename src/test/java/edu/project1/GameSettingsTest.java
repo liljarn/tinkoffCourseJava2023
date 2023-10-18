@@ -12,6 +12,7 @@ public class GameSettingsTest {
     @CsvSource(value = {
         "1, 1, 5, 4",
         "4, 3, 1, 6",
+        "2, 2, 4, 5"
     })
     @DisplayName("Create settings test")
     void settings(int inputDifficulty, int inputLength, int gameDifficulty, int wordLength) {

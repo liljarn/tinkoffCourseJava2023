@@ -26,8 +26,14 @@ public class SessionTest {
         settings.setWordLength(LONG_LENGTH);
         GameWords wordForGame = new GameWords(settings.getWordLength());
         Session session = new Session(wordForGame.randomWord(), settings.getGameDifficulty());
-        GuessResult actual = session.guess('z');
-        assertThat(actual).isInstanceOf(Defeat.class);
+        GuessResult guess = session.guess('z');
+        Assertions.assertAll(
+            () -> assertThat(session.getAttempts()).isEqualTo(1),
+            () -> assertThat(guess).isInstanceOf(Defeat.class),
+            () -> assertThat(guess.state()).containsExactly('*', '*', '*', '*', '*', '*'),
+            () -> assertThat(guess.message()).isEqualTo("You lost!"),
+            () -> assertThat(session.getGameStatus()).isEqualTo(GameStatus.ENDED)
+        );
     }
 
     @Test
@@ -41,8 +47,14 @@ public class SessionTest {
         session.guess('k');
         session.guess('a');
         session.guess('t');
-        GuessResult actual = session.guess('n');
-        assertThat(actual).isInstanceOf(Win.class);
+        GuessResult guess = session.guess('n');
+        Assertions.assertAll(
+            () -> assertThat(session.getAttempts()).isEqualTo(0),
+            () -> assertThat(guess).isInstanceOf(Win.class),
+            () -> assertThat(guess.state()).containsExactly('k', 'a', 't', 'a', 'n', 'a'),
+            () -> assertThat(guess.message()).isEqualTo("YOU WIN!!!"),
+            () -> assertThat(session.getGameStatus()).isEqualTo(GameStatus.ENDED)
+        );
     }
 
     @Test
@@ -53,9 +65,17 @@ public class SessionTest {
         settings.setWordLength(LONG_LENGTH);
         GameWords wordForGame = new GameWords(settings.getWordLength());
         Session session = new Session(wordForGame.randomWord(), settings.getGameDifficulty());
-        GuessResult actual = session.guess('-');
-        assertThat(actual).isInstanceOf(Concede.class);
+        GuessResult guess = session.guess('-');
+        Assertions.assertAll(
+            () -> assertThat(session.getAttempts()).isEqualTo(1),
+            () -> assertThat(guess).isInstanceOf(Concede.class),
+            () -> assertThat(guess.state()).containsExactly('*', '*', '*', '*', '*', '*'),
+            () -> assertThat(guess.message()).isEqualTo("You've conceded. Good luck next time! Never give up!"),
+            () -> assertThat(session.getGameStatus()).isEqualTo(GameStatus.ENDED)
+        );
+
     }
+
     @Test
     @DisplayName("Game state changing correctly when guess is correct")
     public void sessionStateShouldChangingCorrectly_whenUserHasCorrectGuess() {
@@ -64,11 +84,13 @@ public class SessionTest {
         settings.setWordLength(LONG_LENGTH);
         GameWords wordForGame = new GameWords(settings.getWordLength());
         Session session = new Session(wordForGame.randomWord(), settings.getGameDifficulty());
-        GuessResult failedGuess = session.guess('a');
+        GuessResult correctGuess = session.guess('a');
         Assertions.assertAll(
             () -> assertThat(session.getAttempts()).isEqualTo(0),
-            () -> assertThat(failedGuess).isInstanceOf(SuccessfulGuess.class),
-            () -> assertThat(failedGuess.state()).containsExactly('*', 'a', '*', 'a', '*', 'a')
+            () -> assertThat(correctGuess).isInstanceOf(SuccessfulGuess.class),
+            () -> assertThat(correctGuess.state()).containsExactly('*', 'a', '*', 'a', '*', 'a'),
+            () -> assertThat(correctGuess.message()).isEqualTo("Hit!"),
+            () -> assertThat(session.getGameStatus()).isEqualTo(GameStatus.RUNNING)
         );
     }
 
@@ -80,11 +102,14 @@ public class SessionTest {
         settings.setWordLength(LONG_LENGTH);
         GameWords wordForGame = new GameWords(settings.getWordLength());
         Session session = new Session(wordForGame.randomWord(), settings.getGameDifficulty());
-        GuessResult failedGuess = session.guess('z');
+        session.guess('k');
+        GuessResult failedGuess = session.guess('x');
         Assertions.assertAll(
             () -> assertThat(session.getAttempts()).isEqualTo(1),
             () -> assertThat(failedGuess).isInstanceOf(FailedGuess.class),
-            () -> assertThat(failedGuess.state()).containsExactly('*', '*', '*', '*', '*', '*')
+            () -> assertThat(failedGuess.state()).containsExactly('k', '*', '*', '*', '*', '*'),
+            () -> assertThat(failedGuess.message()).isEqualTo("Missed, mistake 1 out of 3."),
+            () -> assertThat(session.getGameStatus()).isEqualTo(GameStatus.RUNNING)
         );
     }
 }
