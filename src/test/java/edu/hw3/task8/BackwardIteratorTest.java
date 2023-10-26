@@ -2,17 +2,18 @@ package edu.hw3.task8;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BackwardIteratorTest {
     @Test
-    @DisplayName("List test")
-    public void list_shouldReturnBackwardList() {
+    @DisplayName("List Integers test")
+    public void backwardIterator_shouldAddListItemsToListInReversedOrder() {
         Iterator<Integer> iterator = new BackwardIterator<>(List.of(1, 2, 3));
         List<Integer> actual = new ArrayList<>();
         while (iterator.hasNext()) {
@@ -22,20 +23,32 @@ public class BackwardIteratorTest {
     }
 
     @Test
-    @DisplayName("LinkedMap test")
-    public void linkedMap_shouldReturnBackwardList() {
-        final int[] VALUES = {5, 4, 1};
-        final String[] ROMAN_VALUES = {"V", "IV", "I"};
-        final Map<Integer, String> ROMAN_DICTIONARY = new LinkedHashMap<>() {{
-            for (int i = 0; i < VALUES.length; i++) {
-                put(VALUES[i], ROMAN_VALUES[i]);
-            }
-        }};
-        Iterator<Integer> iterator = new BackwardIterator<>(ROMAN_DICTIONARY.keySet().stream().toList());
-        List<Integer> backwardList = new ArrayList<>();
+    @DisplayName("Stack Characters test")
+    public void backwardIterator_shouldAddStackItemsToListInReversedOrder() {
+        Stack<Character> stack = new Stack<>();
+        List<Character> actual = new ArrayList<>();
+        stack.push('a');
+        stack.push('b');
+        stack.push('c');
+        Iterator<Character> iterator = new BackwardIterator<>(stack);
         while (iterator.hasNext()) {
-            backwardList.add(iterator.next());
+            actual.add(iterator.next());
         }
-        assertThat(backwardList).containsExactly(1, 4, 5);
+        assertThat(actual).containsExactly('c', 'b', 'a');
+    }
+
+    @Test
+    @DisplayName("Queue Strings test")
+    public void backwardIterator_shouldAddQueueItemsToListInrReversedOrder() {
+        Queue<String> queue = new ArrayDeque<>();
+        List<String> actual = new ArrayList<>();
+        queue.add("ao");
+        queue.add("bo");
+        queue.add("co");
+        Iterator<String> iterator = new BackwardIterator<>(queue);
+        while (iterator.hasNext()) {
+            actual.add(iterator.next());
+        }
+        assertThat(actual).containsExactly("co", "bo", "ao");
     }
 }
