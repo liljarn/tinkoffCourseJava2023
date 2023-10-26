@@ -13,6 +13,7 @@ public class ConsoleHangman {
     private static final int MAX_DIFFICULTY = 4;
     private static final int MAX_LENGTH = 3;
     private static final Logger LOGGER = LogManager.getLogger();
+
     private Session session;
     private final Scanner scanner;
 
