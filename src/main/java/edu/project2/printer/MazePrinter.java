@@ -12,9 +12,9 @@ public class MazePrinter implements Renderer {
         for (int i = 0; i < maze.height(); i++) {
             for (int j = 0; j < maze.width(); j++) {
                 if (maze.grid()[i][j].getType() == Cell.Type.WALL) {
-                   renderedMaze.append(PathColor.WHITE_BACKGROUND_BRIGHT + '\t' + PathColor.RESET);
+                   renderedMaze.append(WHITE_BACKGROUND_BRIGHT + '\t' + RESET);
                 } else {
-                    renderedMaze.append(PathColor.BLACK_BACKGROUND_BRIGHT + '\t' + PathColor.RESET);
+                    renderedMaze.append(BLACK_BACKGROUND_BRIGHT + '\t' + RESET);
                 }
             }
             renderedMaze.append('\n');
@@ -24,6 +24,19 @@ public class MazePrinter implements Renderer {
 
     @Override
     public String render(Maze maze, List<Coordinate> path) {
-        return null;
+        StringBuilder renderedMaze = new StringBuilder();
+        for (int i = 0; i < maze.height(); i++) {
+            for (int j = 0; j < maze.width(); j++) {
+                if (path.contains(new Coordinate(j, i))) {
+                    renderedMaze.append(GREEN_BACKGROUND_BRIGHT + '\t' + RESET);
+                } else if (maze.grid()[i][j].getType() == Cell.Type.WALL) {
+                    renderedMaze.append(WHITE_BACKGROUND_BRIGHT + '\t' + RESET);
+                } else {
+                    renderedMaze.append(BLACK_BACKGROUND_BRIGHT + '\t' + RESET);
+                }
+            }
+            renderedMaze.append('\n');
+        }
+        return renderedMaze.toString();
     }
 }

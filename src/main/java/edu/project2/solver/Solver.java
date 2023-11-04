@@ -1,4 +1,4 @@
-package edu.project2;
+package edu.project2.solver;
 
 import edu.project2.model.Coordinate;
 import edu.project2.model.Maze;
