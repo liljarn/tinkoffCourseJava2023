@@ -1,5 +1,6 @@
 package edu.project2;
 
+import edu.project2.generator.DfsMazeGenerator;
 import edu.project2.generator.Generator;
 import edu.project2.generator.PrimsMazeGenerator;
 import edu.project2.model.Coordinate;
@@ -11,14 +12,14 @@ import edu.project2.solver.DfsMazeSolver;
 import edu.project2.solver.Solver;
 import java.util.List;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 import static java.lang.System.out;
 
 public class MazeApplication {
     private static final int MIN_MAZE_SIZE = 5;
     private static final int MAX_MAZE_SIZE = 41;
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final String ERROR_INPUT_MESSAGE = "Wrong algorithm number";
+    private static final Logger LOGGER = Logger.getLogger(MazeApplication.class.getName());
 
     private final Scanner scanner;
     private final Generator mazeGenerator;
@@ -29,8 +30,8 @@ public class MazeApplication {
     public MazeApplication() {
         out.println("Hello and welcome to Maze Application!");
         scanner = new Scanner(System.in);
-        height = setMazeHeight();
         width = setMazeWidth();
+        height = setMazeHeight();
         mazeGenerator = setMazeGenerator(height, width);
         mazeRenderer = new MazePrinter();
     }
@@ -51,7 +52,7 @@ public class MazeApplication {
         out.println("Choose algorithm for finding path in maze: 1) BFS or 2) DFS");
         int choose = scanner.nextInt();
         while (choose < 1 || choose > 2) {
-            LOGGER.info("Wrong algorithm number");
+            LOGGER.info(ERROR_INPUT_MESSAGE);
             choose = scanner.nextInt();
         }
         if (choose == 1) {
@@ -68,8 +69,17 @@ public class MazeApplication {
     }
 
     private Generator setMazeGenerator(int height, int width) {
-        out.println("Choose algorithm for maze generation: Prim's or DFS");
-        return new PrimsMazeGenerator(height, width);
+        out.println("Choose algorithm for maze generation: 1) Prim's or 2) DFS");
+        int choose = scanner.nextInt();
+        while (choose < 1 || choose > 2) {
+            LOGGER.info(ERROR_INPUT_MESSAGE);
+            choose = scanner.nextInt();
+        }
+        if (choose == 1) {
+            return new PrimsMazeGenerator(height, width);
+        } else {
+            return new DfsMazeGenerator(height, width);
+        }
     }
 
     private int setMazeWidth() {
@@ -83,7 +93,7 @@ public class MazeApplication {
     }
 
     private int setMazeHeight() {
-        out.println("Choose height width of maze from 5 to 41");
+        out.println("Choose odd height of maze from 5 to 41");
         int mazeHeight = scanner.nextInt();
         while (isNotValidMazeSize(mazeHeight)) {
             LOGGER.info("Wrong maze height");

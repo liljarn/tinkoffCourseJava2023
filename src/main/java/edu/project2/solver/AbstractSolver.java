@@ -30,7 +30,7 @@ public abstract class AbstractSolver implements Solver {
     }
 
     protected boolean isCoordinatesNotValid(Maze maze, Coordinate start, Coordinate end) {
-        return !inBounds(start.row(), start.col()) || !inBounds(end.row(), end.row())
+        return !inBounds(start.row(), start.col()) || !inBounds(end.row(), end.col())
             || maze.grid()[start.col()][start.row()].getType() == Cell.Type.WALL
             || maze.grid()[end.col()][end.row()].getType() == Cell.Type.WALL;
     }

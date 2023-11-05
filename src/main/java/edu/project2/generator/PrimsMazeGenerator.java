@@ -4,11 +4,9 @@ import edu.project2.model.Cell;
 import edu.project2.model.Maze;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class PrimsMazeGenerator extends AbstractMaze {
     private final List<Cell> cellsForMazePassage = new ArrayList<>();
-    private final Random random = new Random();
 
     public PrimsMazeGenerator(int height, int width) {
         super(height, width);
@@ -83,9 +81,5 @@ public class PrimsMazeGenerator extends AbstractMaze {
                 }
             }
         }
-    }
-
-    private enum Direction {
-        NORTH, SOUTH, EAST, WEST
     }
 }
