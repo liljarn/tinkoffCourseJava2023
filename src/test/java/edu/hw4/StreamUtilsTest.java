@@ -466,7 +466,7 @@ public class StreamUtilsTest {
     @ParameterizedTest
     @MethodSource("validationErrorsPrettier")
     @DisplayName("Prettier ValidationError test")
-    public void streamOfValidationExceptionsPrettier_should(
+    public void streamOfValidationExceptionsPrettier_shouldReturnMapOfStringAndStringWithErrorsInIt(
         List<Animal> animals,
         Map<String, String> errors
     ) {
