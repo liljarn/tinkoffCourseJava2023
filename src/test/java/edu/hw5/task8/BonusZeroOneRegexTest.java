@@ -83,6 +83,12 @@ public class BonusZeroOneRegexTest {
     private static Stream<Arguments> seventhRegexTest() {
         return Stream.of(
             Arguments.of("10101", true),
+            Arguments.of("1", true),
+            Arguments.of("0", true),
+            Arguments.of("1000", true),
+            Arguments.of("10001001", true),
+            Arguments.of("11000100000000000000001000000001", false),
+            Arguments.of("0000001", true),
             Arguments.of("01010", true),
             Arguments.of("1010", true),
             Arguments.of("0101", true),
