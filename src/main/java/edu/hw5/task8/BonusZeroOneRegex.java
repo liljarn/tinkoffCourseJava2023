@@ -72,7 +72,7 @@ public final class BonusZeroOneRegex {
         if (zerosAndOnes == null) {
             throw new IllegalArgumentException(NULL_MESSAGE);
         }
-        Pattern pattern = Pattern.compile("^(0*1?0+1?0*)+$|^[01]$");
+        Pattern pattern = Pattern.compile("^((?!11)[01]?(?!11))+$");
         return pattern.matcher(zerosAndOnes).matches();
     }
 }

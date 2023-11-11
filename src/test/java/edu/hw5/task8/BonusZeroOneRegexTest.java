@@ -92,7 +92,7 @@ public class BonusZeroOneRegexTest {
             Arguments.of("01010", true),
             Arguments.of("1010", true),
             Arguments.of("0101", true),
-            Arguments.of("110101", false),
+            Arguments.of("0110101", false),
             Arguments.of("11111", false)
         );
     }
