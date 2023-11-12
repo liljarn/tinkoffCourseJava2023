@@ -62,8 +62,11 @@ public class BonusZeroOneRegexTest {
     private static Stream<Arguments> fifthRegexTest() {
         return Stream.of(
             Arguments.of("10101", true),
+            Arguments.of("1", true),
+            Arguments.of("0", false),
+            Arguments.of("1001", false),
             Arguments.of("1010", true),
-            Arguments.of("11", false),
+            Arguments.of("1111", true),
             Arguments.of("0001", false)
         );
     }

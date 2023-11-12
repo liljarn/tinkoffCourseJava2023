@@ -56,7 +56,7 @@ public final class BonusZeroOneRegex {
         if (zerosAndOnes == null) {
             throw new IllegalArgumentException(NULL_MESSAGE);
         }
-        Pattern pattern = Pattern.compile("^((10)+1?)|(1)$");
+        Pattern pattern = Pattern.compile("^(1[01])*1?$");
         return pattern.matcher(zerosAndOnes).matches();
     }
 
