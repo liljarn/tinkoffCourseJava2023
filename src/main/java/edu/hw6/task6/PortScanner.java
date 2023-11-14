@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 public final class PortScanner {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int LAST_PORT = 49151;
-    private static final String NOT_USED_MESSAGE = "Not in use";
     private static final Map<Integer, String> MOST_POPULAR_USED_PORTS = Map.ofEntries(
         Map.entry(21, "FTP"),
         Map.entry(22, "SSH"),
@@ -37,11 +36,10 @@ public final class PortScanner {
     private PortScanner() {
     }
 
-    public static List<Port> checkPorts() {
+    @SuppressWarnings("checkstyle:EmptyBlock") public static List<Port> checkPorts() {
         List<Port> usedPorts = new ArrayList<>();
         for (int i = 1; i < LAST_PORT; i++) {
             try (ServerSocket ss = new ServerSocket(i)) {
-                //LOGGER.info(i + NOT_USED_MESSAGE);
             } catch (IOException e) {
                 usedPorts.add(new Port(
                     Port.Protocol.TCP,
@@ -51,7 +49,6 @@ public final class PortScanner {
             }
 
             try (DatagramSocket ds = new DatagramSocket(i)) {
-                //LOGGER.info(i + NOT_USED_MESSAGE);
             } catch (IOException e) {
                 usedPorts.add(new Port(
                     Port.Protocol.UDP,
@@ -64,9 +61,9 @@ public final class PortScanner {
     }
 
     public static void printUsedPorts(List<Port> usedPorts) {
-        LOGGER.info(String.format("%-10s %-8s %s%n", "Протокол", "Порт", "Сервис"));
+        LOGGER.info(String.format("%-10s %-8s %s", "Протокол", "Порт", "Сервис"));
         for (Port usedPort : usedPorts) {
-            LOGGER.info(String.format("%-10s %-8d %s%n", usedPort.protocol(), usedPort.port(), usedPort.app()));
+            LOGGER.info(String.format("%-10s %-8d %s", usedPort.protocol(), usedPort.port(), usedPort.app()));
         }
     }
 }

@@ -27,9 +27,10 @@ public class DiskMap implements Map<String, String> {
     public DiskMap() {
         filePath = Paths.get("src/main/resources/hw6/diskmap.txt");
         try {
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
             }
+            Files.createFile(filePath);
         } catch (IOException e) {
             LOGGER.info(EXCEPTION_MESSAGE);
         }
@@ -42,7 +43,13 @@ public class DiskMap implements Map<String, String> {
 
     @Override
     public boolean isEmpty() {
-        return sizeOfMap == 0;
+        try {
+            var file = Files.readAllLines(filePath);
+            return file.isEmpty();
+        } catch (IOException e) {
+            LOGGER.info(EXCEPTION_MESSAGE);
+            return false;
+        }
     }
 
     @Override
@@ -120,7 +127,6 @@ public class DiskMap implements Map<String, String> {
 
     @Override
     public void putAll(@NotNull Map<? extends String, ? extends String> m) {
-        sizeOfMap += m.size();
         for (Map.Entry<? extends String, ? extends String> entry : m.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }

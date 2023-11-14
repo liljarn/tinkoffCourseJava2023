@@ -1,29 +1,17 @@
 package edu.hw6.task3;
 
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 public final class FilterUtils {
-    public static final AbstractFilter REGULAR_FILE = Files::isRegularFile;
-    public static final AbstractFilter READABLE = Files::isReadable;
-
     private FilterUtils() {
     }
 
-    public static DirectoryStream.Filter<Path> filter = REGULAR_FILE
-        .and(READABLE)
-        .and(sizeFilter(100000L))
-        .and(magicNumberFilter(0x89, 'P', 'N', 'G'))
-        .and(extensionFilter(".png"))
-        .and(regexNameFilter("_"));
-
-    private static AbstractFilter sizeFilter(Long size) {
+    public static AbstractFilter sizeFilter(Long size) {
         return file -> Files.size(file) > size;
     }
 
-    private static AbstractFilter extensionFilter(String extension) {
+    public static AbstractFilter extensionFilter(String extension) {
         return file -> {
             String fileName = file.getFileName().toString();
             int extensionIndex = fileName.indexOf(".");
@@ -31,7 +19,7 @@ public final class FilterUtils {
         };
     }
 
-    private static AbstractFilter regexNameFilter(String regex) {
+    public static AbstractFilter regexNameFilter(String regex) {
         return file -> {
             String fileName = file.getFileName().toString();
             Pattern filePattern = Pattern.compile(regex);
@@ -39,7 +27,7 @@ public final class FilterUtils {
         };
     }
 
-    private static AbstractFilter magicNumberFilter(int... magicNumbers) {
+    public static AbstractFilter magicNumberFilter(int... magicNumbers) {
         return path -> {
             byte[] bytes = Files.readAllBytes(path);
             if (bytes.length < magicNumbers.length) {
