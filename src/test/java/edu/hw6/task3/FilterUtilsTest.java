@@ -31,7 +31,7 @@ public class FilterUtilsTest {
         List<String> paths = new ArrayList<>();
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(pathFile, filter)) {
             entries.forEach(path -> paths.add(path.toString()));
-            assertThat(paths).containsExactly("src\\main\\resources\\hw6\\task3\\__photo.PNG");
+            assertThat(paths).containsExactly("src/main/resources/hw6/task3/__photo.PNG");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
