@@ -14,14 +14,12 @@ public final class HackerNews {
     }
 
     public static long[] hackerNewsTopStories() {
-        long[] news;
         HttpRequest request =
             HttpRequest.newBuilder(URI.create("https://hacker-news.firebaseio.com/v0/topstories.json")).build();
 
         try (HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build()) {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            news = convertStringToLongArray(response.body());
-            return news;
+            return convertStringToLongArray(response.body());
         } catch (IOException | InterruptedException e) {
             return new long[0];
         }
@@ -36,7 +34,7 @@ public final class HackerNews {
     public static String news(long id) {
         HttpRequest request =
             HttpRequest.newBuilder(URI.create(
-                "https://hacker-news.firebaseio.com/v0/item/" + Long.toString(id) + ".json")).build();
+                "https://hacker-news.firebaseio.com/v0/item/" + id + ".json")).build();
         try (HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build()) {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return parseNews(response.body());
