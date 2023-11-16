@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 public final class CloneUtils {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String TXT = ".txt";
 
     private CloneUtils() {
     }
@@ -31,9 +30,11 @@ public final class CloneUtils {
     }
 
     private static Path generateUniqueCopyPath(Path path, int copyNumber) {
-        String fileName = path.getFileName().toString().replace(TXT, "");
+        int fileExtensionIndex = path.getFileName().toString().indexOf('.');
+        String fileExtension = path.getFileName().toString().substring(fileExtensionIndex);
+        String fileName = path.getFileName().toString().replace(fileExtension, "");
         String copySuffix = (copyNumber == 1) ? " — копия" : " — копия (" + copyNumber + ")";
-        String newName = fileName + copySuffix + TXT;
+        String newName = fileName + copySuffix + fileExtension;
         return path.resolveSibling(newName);
     }
 }
