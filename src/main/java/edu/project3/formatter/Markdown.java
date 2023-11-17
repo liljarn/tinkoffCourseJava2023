@@ -3,7 +3,7 @@ package edu.project3.formatter;
 import edu.project3.model.metrics.Metric;
 import java.util.List;
 
-public class Markdown implements Formatable {
+public class Markdown implements FormatPrinter {
     private static final String REGEX_SPLITTER = "\\|";
     private static final String SPLITTER = "|";
 

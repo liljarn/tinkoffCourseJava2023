@@ -2,6 +2,6 @@ package edu.project3.formatter;
 
 import edu.project3.model.metrics.Metric;
 
-public interface Formatable {
+public interface FormatPrinter {
     void print(Metric metric);
 }
