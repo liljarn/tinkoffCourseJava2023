@@ -1,7 +1,5 @@
 package edu.project3;
 
-import edu.project3.logparser.LogParser;
-import edu.project3.logparser.NginxLogParser;
 import edu.project3.model.Log;
 import edu.project3.model.ParseFormat;
 import edu.project3.model.metrics.Metric;
@@ -10,71 +8,55 @@ import edu.project3.model.metrics.MetricMainInfoBuilder;
 import edu.project3.model.metrics.MetricRequestMethodsInfoBuilder;
 import edu.project3.model.metrics.MetricResourcesInfoBuilder;
 import edu.project3.model.metrics.MetricResponseCodesInfoBuilder;
+import edu.project3.parser.logparser.LogParser;
+import edu.project3.parser.logparser.NginxLogParser;
 import edu.project3.printer.MetricPrinter;
-import edu.project3.receiver.HttpLogReceiver;
-import edu.project3.receiver.PathLogReceiver;
 import edu.project3.receiver.Receiver;
+import edu.project3.receiver.http.HttpLogReceiver;
+import edu.project3.receiver.path.PathLogReceiver;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import static edu.project3.receiver.PathParser.getPaths;
+import static edu.project3.parser.argsparser.ArgsParser.getParseFormat;
+import static edu.project3.receiver.path.PathParser.getPaths;
 
 public class LogParserApplication {
+    private OffsetDateTime fromDateOffset;
+    private OffsetDateTime toDateOffset;
+
     public void run(String[] args) {
         ParseFormat parseFormat = getParseFormat(String.join(" ", args));
         Receiver receiver;
+        getFromDate(parseFormat);
+        getToDate(parseFormat);
+        List<String> paths = new ArrayList<>();
         if (parseFormat.path().startsWith("http")) {
+            paths.add(parseFormat.path());
             receiver = new HttpLogReceiver(parseFormat.path());
         } else {
             List<Path> pathsToLogs = getPaths(parseFormat.path());
+            paths = pathsToLogs.stream().map(Path::toString).toList();
             receiver = new PathLogReceiver(pathsToLogs);
         }
         LogParser logParser = new NginxLogParser();
-        List<Log> logs = logParser.parseLogs(receiver.receive());
-        List<Metric> metrics = getAllMetrics(parseFormat, logs);
+        List<Log> logs = filterLogsByDate(logParser.parseLogs(receiver.receive()));
+        List<Metric> metrics = getAllMetrics(logs, paths);
         MetricPrinter printer = new MetricPrinter();
         printer.printMetrics(parseFormat.format(), metrics);
     }
 
-    private ParseFormat getParseFormat(String args) {
-        String path = "";
-        String fromDate = "";
-        String toDate = "";
-        String format = "";
-        Pattern pattern = Pattern.compile("--(path|from|to|format)\\s(\\S+)");
-        Matcher matcher = pattern.matcher(args);
-        while (matcher.find()) {
-            String command = matcher.group(1);
-            String value = matcher.group(2);
-            switch (command) {
-                case "path":
-                    path = value;
-                    break;
-                case "from":
-                    fromDate = value;
-                    break;
-                case "to":
-                    toDate = value;
-                    break;
-                case "format":
-                    format = value;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        return new ParseFormat(path, fromDate, toDate, format);
+    private List<Log> filterLogsByDate(List<Log> logs) {
+        return logs.stream()
+            .filter(log -> (log.date().isBefore(toDateOffset) && log.date().isAfter(fromDateOffset)))
+            .toList();
     }
 
-    private List<Metric> getAllMetrics(ParseFormat parseFormat, List<Log> logs) {
+    private List<Metric> getAllMetrics(List<Log> logs, List<String> paths) {
         MetricBuilder metricMainInfoBuilder = new MetricMainInfoBuilder(
-            !parseFormat.fromDate().isEmpty() ? OffsetDateTime.parse(parseFormat.fromDate()) : OffsetDateTime.MIN,
-            !parseFormat.toDate().isEmpty() ? OffsetDateTime.parse(parseFormat.toDate()) : OffsetDateTime.MAX,
-            List.of(parseFormat.path())
-        );
+            fromDateOffset, toDateOffset, paths);
         MetricBuilder metricResourcesInfoBuilder = new MetricResourcesInfoBuilder();
         MetricBuilder metricResponseCodesInfoBuilder = new MetricResponseCodesInfoBuilder();
         MetricBuilder metricRequestMethodsInfoBuilder = new MetricRequestMethodsInfoBuilder();
@@ -84,5 +66,23 @@ public class LogParserApplication {
             metricResponseCodesInfoBuilder.build(logs),
             metricRequestMethodsInfoBuilder.build(logs)
         );
+    }
+
+    private void getFromDate(ParseFormat parseFormat) {
+        if (!parseFormat.fromDate().isEmpty()) {
+            LocalDate localDate = LocalDate.parse(parseFormat.fromDate());
+            fromDateOffset = localDate.atStartOfDay(ZoneOffset.UTC).toOffsetDateTime();
+        } else {
+            fromDateOffset = OffsetDateTime.MIN;
+        }
+    }
+
+    private void getToDate(ParseFormat parseFormat) {
+        if (!parseFormat.toDate().isEmpty()) {
+            LocalDate localDate = LocalDate.parse(parseFormat.toDate());
+            toDateOffset = localDate.atStartOfDay(ZoneOffset.UTC).toOffsetDateTime();
+        } else {
+            toDateOffset = OffsetDateTime.MAX;
+        }
     }
 }

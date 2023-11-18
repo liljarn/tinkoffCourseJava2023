@@ -16,10 +16,11 @@ public class MetricPrinter {
         return printer;
     }
 
+    @SuppressWarnings("checkstyle:RegexpSinglelineJava")
     public void printMetrics(String format, List<Metric> metrics) {
         FormatPrinter printer = getFormatPrinter(format);
         for (Metric metric : metrics) {
-            printer.print(metric);
+            System.out.println(printer.print(metric));
         }
     }
 }

@@ -1,5 +1,6 @@
-package edu.project3.receiver;
+package edu.project3.receiver.path;
 
+import edu.project3.receiver.Receiver;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

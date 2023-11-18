@@ -1,4 +1,4 @@
-package edu.project3.receiver;
+package edu.project3.receiver.path;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;

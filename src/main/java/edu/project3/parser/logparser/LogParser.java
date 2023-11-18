@@ -1,4 +1,4 @@
-package edu.project3.logparser;
+package edu.project3.parser.logparser;
 
 import edu.project3.model.Log;
 import java.util.List;

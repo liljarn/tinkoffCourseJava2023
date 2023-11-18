@@ -1,5 +1,6 @@
-package edu.project3.receiver;
+package edu.project3.receiver.http;
 
+import edu.project3.receiver.Receiver;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

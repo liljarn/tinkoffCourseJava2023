@@ -1,8 +1,8 @@
 package edu.project3.model.metrics;
 
 import edu.project3.model.Log;
-import edu.project3.remote.HttpStatusCode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,10 @@ public class MetricRequestMethodsInfoBuilder implements MetricBuilder {
         List<String> metricList = new ArrayList<>();
         metricList.add("HTTP запрос|Количество");
         Map<String, Integer> responseCodes = getMapOfHttpMethods(logs);
-        for (Map.Entry<String, Integer> entry : responseCodes.entrySet()) {
+        List<Map.Entry<String, Integer>> sortedEntries = responseCodes.entrySet().stream()
+            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+            .toList();
+        for (Map.Entry<String, Integer> entry : sortedEntries) {
             metricList.add(entry.getKey() + "|" + entry.getValue());
         }
         return new Metric("HTTP запросы", metricList);
