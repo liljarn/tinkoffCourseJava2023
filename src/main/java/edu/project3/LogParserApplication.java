@@ -4,6 +4,7 @@ import edu.project3.model.Log;
 import edu.project3.model.ParseFormat;
 import edu.project3.model.metrics.Metric;
 import edu.project3.model.metrics.MetricBuilder;
+import edu.project3.model.metrics.MetricIpInfoBuilder;
 import edu.project3.model.metrics.MetricMainInfoBuilder;
 import edu.project3.model.metrics.MetricRequestMethodsInfoBuilder;
 import edu.project3.model.metrics.MetricResourcesInfoBuilder;
@@ -60,11 +61,13 @@ public class LogParserApplication {
         MetricBuilder metricResourcesInfoBuilder = new MetricResourcesInfoBuilder();
         MetricBuilder metricResponseCodesInfoBuilder = new MetricResponseCodesInfoBuilder();
         MetricBuilder metricRequestMethodsInfoBuilder = new MetricRequestMethodsInfoBuilder();
+        MetricBuilder metricIpInfoBuilder = new MetricIpInfoBuilder();
         return List.of(
             metricMainInfoBuilder.build(logs),
             metricResourcesInfoBuilder.build(logs),
             metricResponseCodesInfoBuilder.build(logs),
-            metricRequestMethodsInfoBuilder.build(logs)
+            metricRequestMethodsInfoBuilder.build(logs),
+            metricIpInfoBuilder.build(logs)
         );
     }
 

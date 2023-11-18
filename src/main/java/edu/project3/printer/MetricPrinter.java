@@ -1,19 +1,18 @@
 package edu.project3.printer;
 
-import edu.project3.formatter.Adoc;
+import edu.project3.formatter.AdocFormatter;
 import edu.project3.formatter.FormatPrinter;
-import edu.project3.formatter.Markdown;
+import edu.project3.formatter.MarkdownFormatter;
 import edu.project3.model.metrics.Metric;
 import java.util.List;
 
 public class MetricPrinter {
     private FormatPrinter getFormatPrinter(String format) {
-        FormatPrinter printer = switch (format) {
-            case "markdown" -> new Markdown();
-            case "adoc" -> new Adoc();
+        return switch (format) {
+            case "markdown" -> new MarkdownFormatter();
+            case "adoc" -> new AdocFormatter();
             default -> throw new IllegalStateException("Unexpected value: " + format);
         };
-        return printer;
     }
 
     @SuppressWarnings("checkstyle:RegexpSinglelineJava")
