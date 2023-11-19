@@ -1,4 +1,4 @@
-package edu.project3.receiver.path;
+package edu.project3.parser.pathparser;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;

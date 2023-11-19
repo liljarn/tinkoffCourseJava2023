@@ -31,7 +31,7 @@ public class MetricMainInfoBuilder implements MetricBuilder {
     ) {
         List<String> metricList = new ArrayList<>();
         metricList.add("Метрика|Значение");
-        String logNames = String.join(", ", paths);
+        String logNames = String.join("`, `", paths);
         metricList.add("Файл(ы)|" + "`" + logNames + "`");
         metricList.add("Начальная дата|" + (startDate.equals(OffsetDateTime.MIN) ? "-" : startDate.format(formatter)));
         metricList.add("Конечная дата|" + (endDate.equals(OffsetDateTime.MAX) ? "-" : endDate.format(formatter)));

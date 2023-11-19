@@ -1,9 +1,9 @@
 package edu.project3.parser.logparser;
 
+import edu.project3.parser.pathparser.PathParser;
 import edu.project3.receiver.Receiver;
 import edu.project3.receiver.http.HttpLogReceiver;
 import edu.project3.receiver.path.PathLogReceiver;
-import edu.project3.receiver.path.PathParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static edu.project3.TestUtils.logsForTests;

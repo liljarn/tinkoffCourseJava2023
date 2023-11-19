@@ -18,8 +18,6 @@ public class MetricPrinter {
     @SuppressWarnings("checkstyle:RegexpSinglelineJava")
     public void printMetrics(String format, List<Metric> metrics) {
         FormatPrinter printer = getFormatPrinter(format);
-        for (Metric metric : metrics) {
-            System.out.println(printer.print(metric));
-        }
+        metrics.forEach(metric -> System.out.println(printer.print(metric)));
     }
 }

@@ -22,7 +22,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import static edu.project3.parser.argsparser.ArgsParser.getParseFormat;
-import static edu.project3.receiver.path.PathParser.getPaths;
+import static edu.project3.parser.pathparser.PathParser.getPaths;
 
 public class LogParserApplication {
     private OffsetDateTime fromDateOffset;
