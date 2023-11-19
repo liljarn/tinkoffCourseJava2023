@@ -1,6 +1,5 @@
 package edu.project3.parser.argsparser;
 
-import edu.project3.model.ParseFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +33,9 @@ public final class ArgsParser {
                 default:
                     break;
             }
+        }
+        if (path.isEmpty()) {
+            throw new IllegalArgumentException("Path shouldn't be empty");
         }
         return new ParseFormat(path, fromDate, toDate, format);
     }

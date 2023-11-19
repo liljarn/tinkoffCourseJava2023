@@ -1,7 +1,6 @@
 package edu.project3;
 
 import edu.project3.model.Log;
-import edu.project3.model.ParseFormat;
 import edu.project3.model.metrics.Metric;
 import edu.project3.model.metrics.MetricBuilder;
 import edu.project3.model.metrics.MetricIpInfoBuilder;
@@ -9,6 +8,7 @@ import edu.project3.model.metrics.MetricMainInfoBuilder;
 import edu.project3.model.metrics.MetricRequestMethodsInfoBuilder;
 import edu.project3.model.metrics.MetricResourcesInfoBuilder;
 import edu.project3.model.metrics.MetricResponseCodesInfoBuilder;
+import edu.project3.parser.argsparser.ParseFormat;
 import edu.project3.parser.logparser.LogParser;
 import edu.project3.parser.logparser.NginxLogParser;
 import edu.project3.printer.MetricPrinter;
@@ -31,8 +31,6 @@ public class LogParserApplication {
     public void run(String[] args) {
         ParseFormat parseFormat = getParseFormat(String.join(" ", args));
         Receiver receiver;
-        getFromDate(parseFormat);
-        getToDate(parseFormat);
         List<String> paths = new ArrayList<>();
         if (parseFormat.path().startsWith("http")) {
             paths.add(parseFormat.path());
@@ -42,6 +40,8 @@ public class LogParserApplication {
             paths = pathsToLogs.stream().map(Path::toString).toList();
             receiver = new PathLogReceiver(pathsToLogs);
         }
+        getFromDate(parseFormat);
+        getToDate(parseFormat);
         LogParser logParser = new NginxLogParser();
         List<Log> logs = filterLogsByDate(logParser.parseLogs(receiver.receive()));
         List<Metric> metrics = getAllMetrics(logs, paths);
