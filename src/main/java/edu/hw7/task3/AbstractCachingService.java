@@ -21,31 +21,10 @@ public class AbstractCachingService implements PersonDatabase {
 
     @Override
     public void delete(int id) {
-        Person person = cachedIds.remove(id);
-        if (person == null) {
-            return;
-        }
-        List<Person> names = cachedNames.get(person.name());
-        if (names != null) {
-            names.removeIf(p -> p.id() == id);
-            if (names.isEmpty()) {
-                cachedNames.remove(person.name());
-            }
-        }
-        List<Person> addresses = cachedAddresses.get(person.address());
-        if (addresses != null) {
-            addresses.removeIf(p -> p.id() == id);
-            if (addresses.isEmpty()) {
-                cachedAddresses.remove(person.address());
-            }
-        }
-        List<Person> phones = cachedPhones.get(person.phoneNumber());
-        if (phones != null) {
-            phones.removeIf(p -> p.id() == id);
-            if (phones.isEmpty()) {
-                cachedPhones.remove(person.phoneNumber());
-            }
-        }
+        cachedNames.get(cachedIds.get(id).name()).remove(cachedIds.get(id));
+        cachedAddresses.get(cachedIds.get(id).address()).remove(cachedIds.get(id));
+        cachedPhones.get(cachedIds.get(id).phoneNumber()).remove(cachedIds.get(id));
+        cachedIds.remove(id);
     }
 
     @Override
