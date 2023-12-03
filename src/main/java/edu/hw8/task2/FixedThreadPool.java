@@ -43,6 +43,17 @@ public final class FixedThreadPool implements ThreadPool {
     }
 
     @Override
+    public void awaitTermination() {
+        for (ThreadWorker worker : threads) {
+            try {
+                worker.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
     public void close() {
         canBeExecuted.set(false);
     }

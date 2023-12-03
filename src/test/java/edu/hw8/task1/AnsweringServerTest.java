@@ -7,26 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AnsweringServerTest {
     private AnsweringServer server;
 
-//    @Test
-//    @DisplayName("Client stop test")
-//    public void server_shouldHandleOtherClients_whenFirstClientsDisconnect()
-//        throws ExecutionException, InterruptedException {
-//        startServer();
-//        ExecutorService clientThreads = Executors.newFixedThreadPool(3);
-//        Future<Client>[] clients = new Future[3];
-//        for (int i = 0; i < 3; i++) {
-//            clients[i] = clientThreads.submit(() -> Client.start("Name"));
-//            Thread.sleep(2000);
-//        }
-//        clients[0].get().sendMessage("stop");
-//        clients[1].get().sendMessage("бананы");
-//        String response = clients[2].get().sendMessage("борьба");
-//        clientThreads.shutdown();
-//        assertThat(response).isEqualTo(
-//            "Никогда не сдавайся. Пока ты продолжаешь бороться, судьба всегда может наградить тебя.");
-//
-//    }
-
     @Test
     @DisplayName("Client and server basic test")
     public void run_shouldProcessRequestFromClient() {

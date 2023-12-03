@@ -19,6 +19,7 @@ public class FixedThreadPoolTest {
             threadPool.execute(() -> actual.add(Fibonacci.getFib(cur)));
         }
         threadPool.close();
+        threadPool.awaitTermination();
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 }
