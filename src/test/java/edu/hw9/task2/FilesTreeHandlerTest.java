@@ -41,16 +41,17 @@ public class FilesTreeHandlerTest {
     @DisplayName("findDirectoriesWithMoreThanNumberFiles test")
     public void findDirectoriesWithMoreThanNumberFiles_shouldReturnListOfDirectoriesWithMoreThanNumberFiles() {
         List<String> actual = FilesTreeHandler.findDirectoriesWithMoreThanNumberFiles(path, 3);
-        List<String> directoryNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\'))).toList();
-        assertThat(directoryNames).containsExactlyInAnyOrder("\\1", "\\2", "\\6", "\\7");
+        List<String> directoryNames =
+            actual.stream().map(el -> el.substring(el.lastIndexOf('\\') + 1)).toList();
+        assertThat(directoryNames).containsExactlyInAnyOrder("1", "2", "6", "7");
     }
 
     @Test
     @DisplayName("filterFilesByPredicate with extension predicate test")
     public void filterFilesByPredicate_shouldReturnListOfFilesFilteredByExtensionPredicate() {
         List<String> actual = FilesTreeHandler.filterFilesByPredicate(path, p -> p.toString().endsWith(".tar"));
-        List<String> fileNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\'))).toList();
-        assertThat(fileNames).containsExactlyInAnyOrder("\\0.tar", "\\1.tar", "\\2.tar");
+        List<String> fileNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\') + 1)).toList();
+        assertThat(fileNames).containsExactlyInAnyOrder("0.tar", "1.tar", "2.tar");
     }
 
     @Test
@@ -64,7 +65,7 @@ public class FilesTreeHandlerTest {
                 throw new RuntimeException(e);
             }
         });
-        List<String> fileNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\'))).toList();
-        assertThat(fileNames).containsExactlyInAnyOrder("\\1.txt");
+        List<String> fileNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\') + 1)).toList();
+        assertThat(fileNames).containsExactlyInAnyOrder("1.txt");
     }
 }
