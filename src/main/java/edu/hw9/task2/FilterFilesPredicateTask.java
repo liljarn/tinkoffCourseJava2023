@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 
-public class FilterFilesPredicateTask extends RecursiveTask<List<String>> {
+public class FilterFilesPredicateTask extends RecursiveTask<List<Path>> {
     private final Path startDir;
     private final Predicate<Path> predicate;
 
@@ -20,14 +20,14 @@ public class FilterFilesPredicateTask extends RecursiveTask<List<String>> {
 
     @Override
     @SneakyThrows
-    protected List<String> compute() {
-        List<String> result = new ArrayList<>();
+    protected List<Path> compute() {
+        List<Path> result = new ArrayList<>();
         List<FilterFilesPredicateTask> forks = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(startDir, 1)) {
             walk.forEach(path -> {
                 if (Files.isRegularFile(path)) {
                     if (predicate.test(path)) {
-                        result.add(path.toString());
+                        result.add(path);
                     }
                 } else if (Files.isDirectory(path) && !path.equals(startDir)) {
                     FilterFilesPredicateTask nextTask = new FilterFilesPredicateTask(path, predicate);

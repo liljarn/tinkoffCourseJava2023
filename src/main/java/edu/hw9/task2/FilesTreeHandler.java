@@ -12,15 +12,15 @@ public class FilesTreeHandler {
     private static final ForkJoinPool FORK_JOIN_POOL = ForkJoinPool.commonPool();
 
     @SneakyThrows
-    public static List<String> findDirectoriesWithMoreThanNumberFiles(Path root, int number) {
-        List<String> result;
+    public static List<Path> findDirectoriesWithMoreThanNumberFiles(Path root, int number) {
+        List<Path> result;
         result = FORK_JOIN_POOL.invoke(new FilterDirQuantityTask(root, number));
         FORK_JOIN_POOL.shutdown();
         return result;
     }
 
-    public static List<String> filterFilesByPredicate(Path root, Predicate<Path> predicate) {
-        List<String> result;
+    public static List<Path> filterFilesByPredicate(Path root, Predicate<Path> predicate) {
+        List<Path> result;
         result = FORK_JOIN_POOL.invoke(new FilterFilesPredicateTask(root, predicate));
         FORK_JOIN_POOL.shutdown();
         return result;

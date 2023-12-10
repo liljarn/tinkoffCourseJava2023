@@ -40,17 +40,19 @@ public class FilesTreeHandlerTest {
     @Test
     @DisplayName("findDirectoriesWithMoreThanNumberFiles test")
     public void findDirectoriesWithMoreThanNumberFiles_shouldReturnListOfDirectoriesWithMoreThanNumberFiles() {
-        List<String> actual = FilesTreeHandler.findDirectoriesWithMoreThanNumberFiles(path, 3);
+        List<Path> actual = FilesTreeHandler.findDirectoriesWithMoreThanNumberFiles(path, 3);
         List<String> directoryNames =
-            actual.stream().map(el -> el.substring(el.lastIndexOf('\\') + 1)).toList();
+            actual.stream().map(el -> el.getFileName().toString())
+                .toList();
         assertThat(directoryNames).containsExactlyInAnyOrder("1", "2", "6", "7");
     }
 
     @Test
     @DisplayName("filterFilesByPredicate with extension predicate test")
     public void filterFilesByPredicate_shouldReturnListOfFilesFilteredByExtensionPredicate() {
-        List<String> actual = FilesTreeHandler.filterFilesByPredicate(path, p -> p.toString().endsWith(".tar"));
-        List<String> fileNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\') + 1)).toList();
+        List<Path> actual = FilesTreeHandler.filterFilesByPredicate(path, p -> p.toString().endsWith(".tar"));
+        List<String> fileNames = actual.stream().map(el -> el.getFileName().toString())
+            .toList();
         assertThat(fileNames).containsExactlyInAnyOrder("0.tar", "1.tar", "2.tar");
     }
 
@@ -58,14 +60,15 @@ public class FilesTreeHandlerTest {
     @DisplayName("filterFilesByPredicate with file size predicate test")
     @SneakyThrows
     public void filterFilesByPredicate_shouldReturnListOfFilesFilteredByFileSizePredicate() {
-        List<String> actual = FilesTreeHandler.filterFilesByPredicate(path, p -> {
+        List<Path> actual = FilesTreeHandler.filterFilesByPredicate(path, p -> {
             try {
                 return Files.size(p) > 0;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
-        List<String> fileNames = actual.stream().map(el -> el.substring(el.lastIndexOf('\\') + 1)).toList();
+        List<String> fileNames = actual.stream().map(el -> el.getFileName().toString())
+            .toList();
         assertThat(fileNames).containsExactlyInAnyOrder("1.txt");
     }
 }

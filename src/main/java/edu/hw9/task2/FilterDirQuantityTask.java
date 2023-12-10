@@ -10,7 +10,7 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class FilterDirQuantityTask extends RecursiveTask<List<String>> {
+public class FilterDirQuantityTask extends RecursiveTask<List<Path>> {
     private final Path startDir;
     private final int minQuantity;
 
@@ -21,8 +21,8 @@ public class FilterDirQuantityTask extends RecursiveTask<List<String>> {
 
     @Override
     @SneakyThrows
-    protected List<String> compute() {
-        List<String> result = new ArrayList<>();
+    protected List<Path> compute() {
+        List<Path> result = new ArrayList<>();
         List<FilterDirQuantityTask> forks = new ArrayList<>();
         long filesCounter = countFilesInDirectory(startDir);
         try (Stream<Path> walk = Files.walk(startDir, 1)) {
@@ -32,7 +32,7 @@ public class FilterDirQuantityTask extends RecursiveTask<List<String>> {
                 forks.add(nextTask);
             });
             if (filesCounter > minQuantity) {
-                result.add(startDir.toString());
+                result.add(startDir);
             }
         }
         for (FilterDirQuantityTask task : forks) {
