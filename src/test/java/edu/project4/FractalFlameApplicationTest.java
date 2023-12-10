@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class FractalFlameApplicationTest {
-    private final Path path = Path.of("src/main/resources/project4/img.png");
+    private final Path path = Path.of("img.png");
 
     @BeforeEach
     @SneakyThrows

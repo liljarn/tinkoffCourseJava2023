@@ -24,12 +24,12 @@ public class FractalFlameApplication {
                 new ExponentialTransformation(), new FisheyeTransformation(), new LinearTransformation()
             ),
             3,
-            1000000,
+            10000,
             6
         );
         ImageProcessor processor = new GammaCorrector();
         processor.process(image);
-        Path path = Path.of("src/main/resources/project4/img.png");
+        Path path = Path.of("img.png");
         ImageUtils.save(image, path, ImageFormat.PNG);
     }
 }
