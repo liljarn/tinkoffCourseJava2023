@@ -11,8 +11,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheProxyTest {
-    private final Path path = Path.of("src/main/resources/hw10/cached/fib_num");
-    private final Path dirPath = Path.of("src/main/resources/hw10/cached");
+    private final Path path = Path.of("src", "main", "resources", "hw10", "cached", "fib_num.txt");
+    private final Path dirPath = Path.of("src", "main", "resources", "hw10", "cached");
 
     @SneakyThrows
     @BeforeEach
