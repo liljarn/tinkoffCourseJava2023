@@ -1,4 +1,4 @@
-package edu.hw10.task2;
+package edu.hw10.task2.proxy;
 
 import java.lang.reflect.Proxy;
 import lombok.experimental.UtilityClass;

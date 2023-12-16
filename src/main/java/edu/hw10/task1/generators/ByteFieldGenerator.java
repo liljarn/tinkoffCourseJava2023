@@ -18,6 +18,6 @@ public class ByteFieldGenerator implements FieldGenerator {
                 max = (byte) ((Max) annotation).value();
             }
         }
-        return new Random().nextInt(min, max);
+        return (byte) new Random().nextInt(min, max);
     }
 }

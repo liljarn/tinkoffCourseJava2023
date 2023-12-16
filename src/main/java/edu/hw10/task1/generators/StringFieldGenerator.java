@@ -2,6 +2,7 @@ package edu.hw10.task1.generators;
 
 import edu.hw10.task1.annotations.Max;
 import edu.hw10.task1.annotations.Min;
+import edu.hw10.task1.annotations.NotNull;
 import java.lang.annotation.Annotation;
 import java.util.Random;
 
@@ -21,13 +22,16 @@ public class StringFieldGenerator implements FieldGenerator {
             if (annotation instanceof Max) {
                 max = ((Max) annotation).value();
             }
+            if (annotation instanceof NotNull) {
+                Random random = new Random();
+                long size = random.nextLong(min, max);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < size; i++) {
+                    sb.append(ALPHABET[random.nextInt(ALPHABET.length)]);
+                }
+                return sb.toString();
+            }
         }
-        Random random = new Random();
-        long size = random.nextLong(min, max);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            sb.append(ALPHABET[random.nextInt(ALPHABET.length)]);
-        }
-        return sb.toString();
+        return null;
     }
 }

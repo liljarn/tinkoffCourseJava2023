@@ -1,7 +1,8 @@
-package edu.hw10.task2;
+package edu.hw10.task2.proxy;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.hw10.task2.Cache;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

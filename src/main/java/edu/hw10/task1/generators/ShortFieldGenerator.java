@@ -18,6 +18,6 @@ public class ShortFieldGenerator implements FieldGenerator {
                 max = (short) ((Max) annotation).value();
             }
         }
-        return new Random().nextInt(min, max);
+        return (short) new Random().nextInt(min, max);
     }
 }
