@@ -11,12 +11,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheProxyTest {
-    private final Path path = Path.of("src", "main", "resources", "hw10", "cached", "fib_num");
-    private final Path dirPath = Path.of("src", "main", "resources", "hw10", "cached");
+
 
     @SneakyThrows
     @BeforeEach
     void deleteDir() {
+        String[] pathStrings = {"src", "main", "resources", "hw10", "cached", "fib_num"};
+        Path path = Path.of(String.join( "/", pathStrings));
+        String[] pathDirStrings = {"src", "main", "resources", "hw10", "cached", "fib_num"};
+        Path dirPath = Path.of(String.join( "/", pathDirStrings));
         Files.deleteIfExists(path);
         Files.deleteIfExists(dirPath);
     }
@@ -25,6 +28,8 @@ public class CacheProxyTest {
     @Test
     @DisplayName("CacheProxy test with Cache (persist=true) annotation")
     public void proxyFib_shouldSaveResultOfFunctionFibOnDisk() {
+        String[] pathStrings = {"src", "main", "resources", "hw10", "cached", "fib_num"};
+        Path path = Path.of(String.join( "/", pathStrings));
         FibCalculator fibCalculator = new Fib();
         FibCalculator proxy = CacheProxy.create(fibCalculator, FibCalculator.class);
         proxy.fib(10);
