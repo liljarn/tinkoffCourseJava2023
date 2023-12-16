@@ -16,7 +16,7 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class ProxyInvocationHandler implements InvocationHandler {
-    private final Path pathToCachedMethods = Path.of("src/main/resources/hw10/cached");
+    private final Path pathToCachedMethods = Path.of("src", "main", "resources", "hw10", "cached");
     private final Map<Method, Map<List<Object>, Object>> map = new HashMap<>();
     private final Gson gson = new GsonBuilder().create();
 
