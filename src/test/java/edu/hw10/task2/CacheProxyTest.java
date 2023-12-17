@@ -11,9 +11,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheProxyTest {
+    private final String s = System.getProperty("file.separator");
     private final Path path =
-        Path.of("src", "main", "resources", "hw10", "cached", "fib_num.txt");
-    private final Path dirPath = Path.of("src", "main", "resources", "hw10", "cached");
+        Path.of("src", s, "main", s, "resources", s, "hw10", s, "cached", s, "fib_num.txt");
+    private final Path dirPath = Path.of("src", s, "main", s, "resources", s, "hw10", s, "cached");
 
     @BeforeEach
     void deleteDir() throws IOException {
