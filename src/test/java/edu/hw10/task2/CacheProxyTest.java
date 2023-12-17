@@ -5,16 +5,19 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheProxyTest {
+    String separator = File.separator;
     private final Path path =
-        Path.of(System.getProperty("user.dir"), "src", "main", "resources", "hw10", "cached", "fib_num.txt");
+        Path.of("src" + separator + "main" + separator + "resources" + separator + "hw10" + separator + "cached" +
+            separator + "fib_num.txt");
     private final Path dirPath =
-        Path.of(System.getProperty("user.dir"), "src", "main", "resources", "hw10", "cached");
+        Path.of("src" + separator + "main" + separator + "resources" + separator + "hw10" + separator + "cached");
 
     @SneakyThrows
     @BeforeEach

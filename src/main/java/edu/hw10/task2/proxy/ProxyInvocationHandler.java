@@ -3,6 +3,7 @@ package edu.hw10.task2.proxy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.hw10.task2.Cache;
+import java.io.File;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -16,8 +17,9 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class ProxyInvocationHandler implements InvocationHandler {
+    String separator = File.separator;
     private final Path pathToCachedMethods =
-        Path.of(System.getProperty("user.dir"), "src", "main", "resources", "hw10", "cached");
+        Path.of("src" + separator + "main" + separator + "resources" + separator + "hw10" + separator + "cached");
     private final Map<Method, Map<List<Object>, Object>> map = new HashMap<>();
     private final Gson gson = new GsonBuilder().create();
 
