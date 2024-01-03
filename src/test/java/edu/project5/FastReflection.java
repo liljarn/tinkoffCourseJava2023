@@ -53,10 +53,7 @@ public class FastReflection {
     @Setup
     public void setup() {
         student = new Student("Maksim", "Ustinov");
-
         method = Student.class.getDeclaredMethod("name");
-        method.setAccessible(true);
-
         methodHandle = MethodHandles.lookup().findGetter(Student.class, "name", String.class);
 
         CallSite site = LambdaMetafactory.metafactory(
