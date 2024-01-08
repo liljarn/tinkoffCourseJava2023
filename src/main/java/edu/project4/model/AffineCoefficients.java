@@ -8,16 +8,17 @@ public record AffineCoefficients(double a, double b, double c, double d, double 
 
     public static AffineCoefficients create() {
         while (true) {
-            double aCoef = ThreadLocalRandom.current().nextDouble(-1, 1);
-            double bCoef = ThreadLocalRandom.current().nextDouble(-1, 1);
-            double cCoef = ThreadLocalRandom.current().nextDouble(-1, 1);
-            double dCoef = ThreadLocalRandom.current().nextDouble(-1, 1);
-            double eCoef = ThreadLocalRandom.current().nextDouble(-1, 1);
-            double fCoef = ThreadLocalRandom.current().nextDouble(-1, 1);
+            ThreadLocalRandom rand = ThreadLocalRandom.current();
+            double aCoef = rand.nextDouble(-1, 1);
+            double bCoef = rand.nextDouble(-1, 1);
+            double cCoef = rand.nextDouble(-1, 1);
+            double dCoef = rand.nextDouble(-1, 1);
+            double eCoef = rand.nextDouble(-1, 1);
+            double fCoef = rand.nextDouble(-1, 1);
             if (checkAffine(aCoef, bCoef, dCoef, eCoef)) {
-                int r = ThreadLocalRandom.current().nextInt(COLOR_BOUND);
-                int g = ThreadLocalRandom.current().nextInt(COLOR_BOUND);
-                int b = ThreadLocalRandom.current().nextInt(COLOR_BOUND);
+                int r = rand.nextInt(COLOR_BOUND);
+                int g = rand.nextInt(COLOR_BOUND);
+                int b = rand.nextInt(COLOR_BOUND);
                 Color color = new Color(r, g, b);
                 return new AffineCoefficients(aCoef, bCoef, cCoef, dCoef, eCoef, fCoef, color);
             }
