@@ -1,5 +1,6 @@
 package edu.project2;
 
+import edu.hw9.task3.ParallelDfsMazeSolver;
 import edu.project2.generator.DfsMazeGenerator;
 import edu.project2.generator.Generator;
 import edu.project2.generator.PrimsMazeGenerator;
@@ -48,17 +49,19 @@ public class MazeApplication {
         out.println("Shortest path from start to end:\n" + mazeRenderer.render(maze, path));
     }
 
-    private Solver setMazeSolver(Maze maze) {
-        out.println("Choose algorithm for finding path in maze: 1) BFS or 2) DFS");
+    @SuppressWarnings("checkstyle:MagicNumber") private Solver setMazeSolver(Maze maze) {
+        out.println("Choose algorithm for finding path in maze: 1) BFS or 2) DFS or 3) Parallel DFS");
         int choose = scanner.nextInt();
-        while (choose < 1 || choose > 2) {
+        while (choose < 1 || choose > 3) {
             LOGGER.info(ERROR_INPUT_MESSAGE);
             choose = scanner.nextInt();
         }
         if (choose == 1) {
             return new BfsMazeSolver(maze);
-        } else {
+        } else if (choose == 2) {
             return new DfsMazeSolver(maze);
+        } else {
+            return new ParallelDfsMazeSolver(maze);
         }
     }
 
@@ -68,6 +71,7 @@ public class MazeApplication {
         return new Coordinate(x, y);
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     private Generator setMazeGenerator(int height, int width) {
         out.println("Choose algorithm for maze generation: 1) Prim's or 2) DFS");
         int choose = scanner.nextInt();
@@ -77,7 +81,7 @@ public class MazeApplication {
         }
         if (choose == 1) {
             return new PrimsMazeGenerator(height, width);
-        } else {
+        } else  {
             return new DfsMazeGenerator(height, width);
         }
     }
