@@ -46,7 +46,11 @@
         <maven-site-plugin.version>4.0.0-M9</maven-site-plugin.version>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
+
+        <gson.version>2.10.1</gson.version>
+
         <jmh.version>1.37</jmh.version>
+
     </properties>
 
     <dependencyManagement>
@@ -119,6 +123,12 @@
 
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
         <!-- JMH -->
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
